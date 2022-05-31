@@ -1,0 +1,114 @@
+/*
+Goals for today:
+    Get ui layout set up
+    Set up test NG
+    After all that is done start dealing with data
+ */
+
+public class App {
+
+    public static void main(String args[]) {
+        MainThread mainThread = new MainThread();
+        mainThread.start();
+    }
+}
+
+
+class MainThread extends Thread{
+    public Thread t;
+    @Override
+    public void run() {
+        //Create frame and such
+        System.out.println("Running Thread");
+        InputFrame frame = new InputFrame();
+
+    }
+
+    public void start() {
+        //Create thread(s)
+        System.out.println("Starting thread");
+       if(t == null) {
+           t = new Thread(this, "mainThread");
+           t.start();
+       }
+    }
+}
+
+
+// Panel Code
+
+import javax.swing.*;
+
+public class InputFrame extends JFrame {
+    public InputFrame() {
+        setSize(640,640);
+        add(new InputPanel());
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+}
+
+class InputPanel extends JPanel {
+
+    public JTextField tanInput;
+    public JLabel tan;
+    public JTextField cityInput;
+    public JLabel city;
+    public JTextField riInput;
+    public JLabel ri;
+    public JTextField piInput;
+    public JLabel pi;
+    public InputPanel() {
+        tanInput = new JTextField(15);
+        tan = new JLabel("TAN:");
+        cityInput = new JTextField(15);
+        city = new JLabel("City:");
+        riInput = new JTextField(15);
+        ri = new JLabel("RI:");
+        piInput = new JTextField(15);
+        pi = new JLabel("PI:");
+        SpringLayout layout = new SpringLayout();
+        setLayout(layout);
+
+        addFields();
+        moveFields(layout);
+    }
+
+    void addFields() {
+        //code for adding and orienting components in the layout.
+        add(tan);
+        add(tanInput);
+        add(city);
+        add(cityInput);
+        add(pi);
+        add(piInput);
+        add(ri);
+        add(riInput);
+    }
+
+    void moveFields(SpringLayout layout) {
+        //left column fields
+        //TAN
+        layout.putConstraint(SpringLayout.WEST, tan, 15,SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.NORTH, tan, 15,SpringLayout.NORTH, this);
+        layout.putConstraint(SpringLayout.WEST, tanInput, 5,SpringLayout.EAST, tan);
+        layout.putConstraint(SpringLayout.NORTH, tanInput, 15,SpringLayout.NORTH, this);
+        //City
+        layout.putConstraint(SpringLayout.WEST, city, 15,SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.NORTH, city, 15,SpringLayout.SOUTH, tan);
+        layout.putConstraint(SpringLayout.WEST, cityInput, 5,SpringLayout.EAST, city);
+        layout.putConstraint(SpringLayout.NORTH, cityInput, 10,SpringLayout.SOUTH, tanInput);
+        //PI
+        layout.putConstraint(SpringLayout.WEST, pi, 15,SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.NORTH, pi, 15,SpringLayout.SOUTH, city);
+        layout.putConstraint(SpringLayout.WEST, piInput, 15,SpringLayout.EAST, pi);
+        layout.putConstraint(SpringLayout.NORTH, piInput, 10,SpringLayout.SOUTH, cityInput);
+        //RI
+        layout.putConstraint(SpringLayout.WEST, ri, 15,SpringLayout.WEST, this);
+        layout.putConstraint(SpringLayout.NORTH, ri, 15,SpringLayout.SOUTH, pi);
+        layout.putConstraint(SpringLayout.WEST, riInput, 15,SpringLayout.EAST, ri);
+        layout.putConstraint(SpringLayout.NORTH, riInput, 10,SpringLayout.SOUTH, piInput);
+        //Buttons
+        //right column fields
+    }
+}
